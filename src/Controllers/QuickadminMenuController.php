@@ -49,7 +49,7 @@ class QuickadminMenuController extends Controller
         foreach ($menusList as $menu) {
             $menu->position = $request->{'menu-' . $menu->id};
             $menu->save();
-            if ($menu->children()->isEmpty()) {
+            if (!$menu->children()->isEmpty()) {
                 foreach ($menu->children as $child) {
                     $child->position  = $request->{'child-' . $child->id};
                     $child->parent_id = $request->{'child-parent-' . $child->id};
