@@ -47,12 +47,9 @@ class QuickadminMenuController extends Controller
             ->where('parent_id', null)
             ->orderBy('position')->get();
         foreach ($menusList as $menu) {
-            if ($menu->children()->first() == null) {
-                $menu->position = $request->{'menu-' . $menu->id};
-                $menu->save();
-            } else {
-                $menu->position = $request->{'menu-' . $menu->id};
-                $menu->save();
+            $menu->position = $request->{'menu-' . $menu->id};
+            $menu->save();
+            if ($menu->children()->isEmpty()) {
                 foreach ($menu->children as $child) {
                     $child->position  = $request->{'child-' . $child->id};
                     $child->parent_id = $request->{'child-parent-' . $child->id};
